@@ -55,7 +55,8 @@ public class TicTacToe {
             if (row >= 0 && row < 3 && col >= 0 && col < 3 && board.isCellEmpty(row, col)) {
                 break;
             }
-            System.out.println("Invalid input. Please enter a row and column between 0 and 2 that are not already occupied.");
+            System.out.println("Invalid input. Please enter a row and " +
+                    "column between 0 and 2 that are not already occupied.");
         }
         return new int[]{row, col};
     }
