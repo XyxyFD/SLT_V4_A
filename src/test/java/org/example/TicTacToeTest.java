@@ -90,22 +90,6 @@ public class TicTacToeTest {
 
     }
 
-
-    @Test
-    public void testStartGameEndsWhenBoardFull() {
-        String input = "1\n1\n0\n0\n2\n2\n2\n1\n2\n0\n1\n0\n0\n1\n0\n2\n1\n2\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        scanner = new Scanner(System.in);
-        game = new TicTacToe(board, player1, player2, scanner);
-        game.start();
-
-        assertTrue(board.isFull());
-    }
-
-
-
-
     @Test
     public void testDefaultConstructor() {
         TicTacToe defaultGame = new TicTacToe();
@@ -134,7 +118,7 @@ public class TicTacToeTest {
         game = new TicTacToe(board, player1, player2, scanner);
         game.start();
 
-        // Verify that there is no winner and the board is full
+
         assertFalse(game.hasWinner());
         assertTrue(board.isFull());
     }
@@ -149,6 +133,32 @@ public class TicTacToeTest {
         game.start();
 
         assertTrue(game.hasWinner());
+    }
+
+    @Test
+    public void testStartNewGameAfterPlayAgain() {
+        String input = "0\n0\n1\n1\n0\n1\n2\n1\n0\n2\nyes\n0\n0\n1\n0\n0\n1\n1\n1\n0\n2\nno\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner scanner = new Scanner(System.in);
+        game = new TicTacToe(board, player1, player2, scanner);
+        game.start();
+
+        assertTrue(game.getCounter() == 2);
+    }
+
+
+
+    @Test
+    public void testStartGameEndsWhenBoardFull() {
+        String input = "1\n1\n0\n0\n2\n2\n2\n1\n2\n0\n1\n0\n0\n1\n0\n2\n1\n2\nno\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        scanner = new Scanner(System.in);
+        game = new TicTacToe(board, player1, player2, scanner);
+        game.start();
+
+        assertTrue(board.isFull());
     }
 
 }
