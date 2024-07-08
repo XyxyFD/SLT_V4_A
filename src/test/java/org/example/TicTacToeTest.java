@@ -114,4 +114,41 @@ public class TicTacToeTest {
         assertEquals('X', defaultGame.getCurrentPlayer().getMarker());
     }
 
+    @Test
+    public void testHasWinner() {
+        board.place(0, 0, 'X');
+        board.place(0, 1, 'X');
+        board.place(0, 2, 'X');
+        assertTrue(game.hasWinner());
+
+        board.clear();
+        assertFalse(game.hasWinner());
+    }
+
+    @Test
+    public void testGameDraw() {
+        String input = "0\n0\n1\n1\n2\n2\n2\n1\n2\n0\n1\n0\n0\n1\n0\n2\n1\n2\nno\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner scanner = new Scanner(System.in);
+        game = new TicTacToe(board, player1, player2, scanner);
+        game.start();
+
+        // Verify that there is no winner and the board is full
+        assertFalse(game.hasWinner());
+        assertTrue(board.isFull());
+    }
+
+    @Test
+    public void testGameWin() {
+        String input = "0\n0\n1\n0\n0\n1\n1\n1\n0\n2\nno\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner scanner = new Scanner(System.in);
+        game = new TicTacToe(board, player1, player2, scanner);
+        game.start();
+
+        assertTrue(game.hasWinner());
+    }
+
 }

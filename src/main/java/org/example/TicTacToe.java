@@ -27,24 +27,6 @@ public class TicTacToe {
         this.scanner = scanner;
     }
 
-
-
-
-    public void start() {
-        board.clear();
-        while (!board.isFull()) {
-            board.print();
-            System.out.println("Current Player: " + currentPlayer.getMarker());
-            int[] move = getPlayerMove();
-            board.place(move[0], move[1], currentPlayer.getMarker());
-            switchCurrentPlayer();
-        }
-        board.print();
-        System.out.println("Game Over!");
-    }
-
-
-
     public int[] getPlayerMove() {
         int row, col;
         while (true) {
@@ -72,5 +54,32 @@ public class TicTacToe {
 
     public Board getBoard() {
         return board;
+    }
+
+
+    public void start() {
+        board.clear();
+        while (!board.isFull() && !hasWinner()) {
+            board.print();
+            System.out.println("Current Player: " + currentPlayer.getMarker());
+            int[] move = getPlayerMove();
+            board.place(move[0], move[1], currentPlayer.getMarker());
+            if (hasWinner()) {
+                board.print();
+                System.out.println("Player " + currentPlayer.getMarker() + " wins!");
+                return;
+            }
+            switchCurrentPlayer();
+        }
+        board.print();
+        if (board.isFull()) {
+            System.out.println("It's a draw!");
+        }
+    }
+
+
+
+    public boolean hasWinner() {
+        return board.hasWinner();
     }
 }
