@@ -56,30 +56,41 @@ public class TicTacToe {
         return board;
     }
 
+    public boolean hasWinner() {
+        return board.hasWinner();
+    }
 
     public void start() {
-        board.clear();
-        while (!board.isFull() && !hasWinner()) {
-            board.print();
-            System.out.println("Current Player: " + currentPlayer.getMarker());
-            int[] move = getPlayerMove();
-            board.place(move[0], move[1], currentPlayer.getMarker());
-            if (hasWinner()) {
+        while (true) {
+            counter++;
+            board.clear();
+            while (!board.isFull() && !hasWinner()) {
                 board.print();
-                System.out.println("Player " + currentPlayer.getMarker() + " wins!");
-                return;
+                System.out.println("Current Player: " + currentPlayer.getMarker());
+                int[] move = getPlayerMove();
+                board.place(move[0], move[1], currentPlayer.getMarker());
+                if (hasWinner()) {
+                    board.print();
+                    System.out.println("Player " + currentPlayer.getMarker() + " wins!");
+                    break;
+                }
+                switchCurrentPlayer();
             }
-            switchCurrentPlayer();
-        }
-        board.print();
-        if (board.isFull()) {
-            System.out.println("It's a draw!");
+            if (board.isFull() && !hasWinner()) {
+                board.print();
+                System.out.println("It's a draw!");
+            }
+
+            System.out.print("Do you want to play again? (yes/no): ");
+
+            String answer = scanner.next();
+            if (!answer.equalsIgnoreCase("yes")) {
+                break;
+            }
         }
     }
 
-
-
-    public boolean hasWinner() {
-        return board.hasWinner();
+    public int getCounter() {
+        return counter;
     }
 }
